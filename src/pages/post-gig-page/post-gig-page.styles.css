@@ -1,0 +1,58 @@
+.post-gig-page {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.post-gig-page>* {
+    margin: 25px;
+}
+
+.add-gig-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-gig-info > h3 {
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.post-gig-add-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-gig-add-image > *{
+    font-weight: 300;
+    margin-bottom: 8px;
+    margin: 0px 10px;
+}
+
+.add-gig-image {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    cursor: pointer;
+}
+
+.gig-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gig-preview > h1 {
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.post-gig-completion-time {
+    display: flex;
+    align-items: center;
+}
+
+.post-gig-completion-time > h2 {
+    font-weight: 100;
+    margin-left: 10px;
+}

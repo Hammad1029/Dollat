@@ -1,0 +1,37 @@
+.active-page {
+    color: #3b4f50 !important;
+    font-weight: bold;
+}
+
+.header-options a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header>* {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0px 30px;
+}
+
+.header-menu>* {
+    margin: 0px 30px;
+}
+
+.header-menu * {
+    display: flex;
+    align-items: center;
+}
+
+.header-search>img {
+    width: 50px;
+    margin-right: 50px;
+    cursor: pointer;
+}
+
+.header-options>* {
+    margin: 0px 15px;
+    padding: 30px 0px;
+}
+

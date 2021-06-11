@@ -1,0 +1,28 @@
+.sign-in {
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-in > img {
+    width:100px;
+    height: 100px;
+}
+
+.sign-in > h1 {
+    margin-top: 20px;
+    width: fit-content;
+    font-weight: 400;
+}
+
+.sign-in > p {
+    width: fit-content;
+}
+
+.sign-in > h2 {
+    width: fit-content;
+    font-weight: 400;
+}

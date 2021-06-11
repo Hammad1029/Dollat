@@ -1,0 +1,8 @@
+.homepage-categories-cards {
+    display: flex;
+    margin: 50px;
+}
+
+.homepage-categories-cards > * {
+    margin: 0px 10px;
+}

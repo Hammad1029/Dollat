@@ -1,0 +1,31 @@
+.view-gigs-page-banner {
+    width: 100%;
+    background-image: url('./1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+    color: #fed0a9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.view-gigs-page-banner>* {
+    font-weight: 100;
+    margin-left: 100px;
+}
+
+.view-gigs-page-banner>h1 {
+    margin-top: 70px;
+}
+
+.gigs-grid {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(345px, 1fr));
+    row-gap: 20px;
+}
+
+.gigs-grid>* {
+    margin: 0px 20px;
+}

@@ -1,0 +1,36 @@
+.homepage-carousel-item {
+    min-width: 50%;
+    min-height: 100%;
+    display: flex;
+}
+
+.homepage-carousel-item>img {
+    height: 55vh;
+    mix-blend-mode: multiply;
+}
+
+.homepage-talent-info {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.homepage-talent-info>i {
+    font-size: 50px;
+    font-weight: 100;
+    margin-top: 100px;
+}
+
+.homepage-talent-info-details {
+    margin: auto 0px 30px 15px;
+}
+
+.homepage-talent-name {
+    font-size: large;
+    font-style: italic;
+}
+
+.homepage-talent-skill {
+    font-weight: bold;
+    font-style: italic;
+}

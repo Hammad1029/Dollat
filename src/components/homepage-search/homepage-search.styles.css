@@ -1,0 +1,29 @@
+.homepage-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.homepage-search > p {
+    font-size: 40px;
+    font-weight: 600;
+    /* align-self: center; */
+}
+
+.homepage-search-pakistan-green {
+    color: rgb(0, 242, 255);
+    margin-bottom: 20px;
+}
+
+.homepage-search-chips {
+    margin-top: 10px;
+}
+
+.homepage-search-chips > * {
+    margin: 0px 5px;
+}
+
+.homepage-search-chips > i {
+    margin-right: 10px;
+}

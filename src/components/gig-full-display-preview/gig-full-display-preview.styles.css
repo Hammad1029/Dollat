@@ -1,0 +1,63 @@
+.gig-full-display-preview {
+    width: 80vw;
+    height: fit-content;
+    padding: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.gig-full-display-preview h1 {
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.gig-full-display-details-preview {
+    max-width: 60%;
+}
+
+.gig-freelancer-info-preview {
+    display: flex;
+    align-items: center;
+}
+
+.gig-freelancer-info-preview>p {
+    margin-left: 10px;
+    font-size: large;
+}
+
+.gig-display-banner-preview > img {
+    width: 500px;
+    height: 500px;
+    margin-bottom: 50px;
+}
+
+.gig-buy-preview {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    border: 10px solid grey;
+    border-radius: 50px;
+    position: sticky;
+    top: 30px;
+    padding: 30px;
+    margin: 120px 0px 0px 50px;
+}
+
+.gig-buy-preview>div{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.gig-buy-preview>div>p{
+    margin: 0px 50px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.gig-buy-preview>.buy-gig-call-to-action-preview {
+    margin-top: 50px;
+    align-self: center;
+}

@@ -1,0 +1,31 @@
+.avatar-popup {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.avatar-popup>* {
+    margin: 10px 0px;
+}
+
+.avatar-popup-item {
+    display: flex;
+}
+
+.avatar-popup-item>* {
+    margin: 0px 10px;
+    font-size: large;
+}
+
+.avatar-popup-profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-popup-profile-info>h2 {
+    margin-top: 15px;
+    font-weight: 300;
+    font-size: 25px;
+}

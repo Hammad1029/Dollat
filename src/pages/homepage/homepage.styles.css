@@ -1,0 +1,37 @@
+.homepage-get-started {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    justify-content: center;
+    align-items: center;
+    border: 5px dashed #3b4f50;
+    padding: 20px;
+}
+
+.homepage-get-started-call-to-action {
+    width: 60%;
+    display: flex;
+    margin-top: 50px;
+    justify-content: space-between;
+}
+
+.homepage-get-started-call-to-action h1 {
+    font-weight: 400;
+}
+
+.homepage-search-carousel {
+    height: 60vh;
+    overflow: hidden;
+    padding: 20px 80px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.homepage-search-carousel>* {
+    width: 50%;
+}
+
+.homepage-header-background {
+    background-image: url('./6.png');
+    color: white;
+}
