@@ -1,13 +1,14 @@
 import React from 'react';
-import Search from '../../components/search/search.component';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 
-const TestingPage = () => {
-    return (
-        <div>
-            <Search />
-        </div>
-    );
-}
+const searchClient = algoliasearch('4YRCWBZ76R', 'b8cea3ce2fdfdc089ba334f075075808');
 
+const TestingPage = () => (
+  <InstantSearch searchClient={searchClient} indexName="demo_ecommerce">
+    <SearchBox />
+    <Hits />
+  </InstantSearch>
+);
 
 export default TestingPage;
