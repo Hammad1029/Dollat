@@ -15,6 +15,7 @@ import PostGigPage from './pages/post-gig-page/post-gig-page.component';
 import ViewGigsPage from './pages/view-gigs-page/view-gigs-page.component';
 import CenterPopup from './components/center-popup/center-popup.component';
 import GigFullDisplay from './components/gig-full-display/gig-full-display.component';
+import LandingPage from './pages/landing-page/landing-page.component';
 
 const theme = createMuiTheme({
     palette: {
@@ -71,6 +72,9 @@ const App = () => {
                 <Switch>
                     <Route exact path='/'>
                         <HomePage />
+                    </Route>
+                    <Route exact path='/LandingPage'>
+                        <LandingPage />
                     </Route>
                     <Route>
                         <Header />

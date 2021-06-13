@@ -54,13 +54,16 @@ const Header = ({ homepage }) => {
                         <MenuItem onClick={closeMenu}>--- Other</MenuItem>
                         <MenuItem onClick={closeMenu}>Other</MenuItem>
                     </Menu>
+                    <NavLink to='LandingPage' activeClassName='active-page'>
+                        Landing Page
+                    </NavLink>
                     <NavLink to='Testing' activeClassName='active-page'>
                         Testing Page
                     </NavLink>
-                    <NavLink to='/ViewGigs' activeClassName='active-page'>
+                    <NavLink to='ViewGigs' activeClassName='active-page'>
                         View Gigs
                     </NavLink>
-                    <NavLink to='/PostGig' activeClassName='active-page'>
+                    <NavLink to='PostGig' activeClassName='active-page'>
                         Post Gig
                     </NavLink>
                     {
