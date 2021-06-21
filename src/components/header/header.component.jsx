@@ -54,9 +54,6 @@ const Header = ({ homepage }) => {
                         <MenuItem onClick={closeMenu}>--- Other</MenuItem>
                         <MenuItem onClick={closeMenu}>Other</MenuItem>
                     </Menu>
-                    <NavLink to='LandingPage' activeClassName='active-page'>
-                        Landing Page
-                    </NavLink>
                     <NavLink to='Testing' activeClassName='active-page'>
                         Testing Page
                     </NavLink>
