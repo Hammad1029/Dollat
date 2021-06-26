@@ -9,13 +9,14 @@ import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { v4 as uuid } from 'uuid';
-import { firestoreDB, firebaseStorage } from '../../firebase/firebase';
+import { useHistory } from 'react-router-dom';
+import { convertToRaw } from 'draft-js';
 
 import { TextField, Button, IconButton, Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { convertToRaw } from 'draft-js';
+import { postGig } from '../../firebase/firebase';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PostGigPage = () => {
     const classes = useStyles();
+    const history = useHistory();
 
     const [fullGigState, setFullGigOpen] = useState(false);
     const fullGigOpen = () => setFullGigOpen(true);
@@ -46,11 +48,12 @@ const PostGigPage = () => {
 
     const { name, uid, photoURL } = useSelector(state => state.userReducer.currentUser);
     const [gigData, setGigData] = useState({
+        active: true,
         gigUID: uuid(),
         freelancer: name,
         freelancerUID: uid,
         freelancerAvatar: photoURL,
-        timesGigBought: 0,
+        gigInstancesCount: 0,
         gigRating: 0,
         freelancerRating: 0,
         gigPostedDate: (new Date()).toDateString(),
@@ -72,7 +75,7 @@ const PostGigPage = () => {
     const handleRichTextChange = e => {
         setGigData(prevData => ({
             ...prevData,
-            richDetails: convertToRaw(e.getCurrentContent()),
+            richDetails: JSON.stringify(convertToRaw(e.getCurrentContent())),
             details: e.getCurrentContent().getPlainText()
         }))
     }
@@ -97,16 +100,8 @@ const PostGigPage = () => {
         if (completionTime > 30)
             alert("Completion time too long. We're only accepting gigs with completion time less than 30 right now");
         else {
-            const gigImageRef = firebaseStorage.child(`gig-files/${gigUID}/gigHeader`);
-            await gigImageRef.put(gigImageFile).catch(e => console.error(e));
-            const gigImageLink = await gigImageRef.getDownloadURL().catch(e => console.error(e));
-            const gigRef = firestoreDB.doc(`gigs/${gigUID}`);
-            const gigDataTemp = {
-                ...gigData,
-                gigImage: gigImageLink
-            }
-            await gigRef.set({ ...gigDataTemp }).catch(e => console.error(e));
-            setGigData({ ...gigDataTemp });
+            const postGigResult = await postGig(gigData, gigImageFile);
+            if (postGigResult) history.push(`/Gig/${gigUID}`);
         }
     }
 

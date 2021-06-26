@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { convertToRaw } from 'draft-js';
 
 import { Card, CardContent, Typography, CardActions, Button, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import PaymentIcon from '@material-ui/icons/Payment';
-
 import RichTextEditor from '../rich-text-editor/rich-text-editor.component';
 import JazzCash from './jazzcash.svg';
 
+import { buyGig } from '../../firebase/firebase';
+
 const useStyles = makeStyles(theme => ({
     root: {
-        width: 'fit-content',
+        width: '75vw',
         display: 'flex',
         padding: '50px',
+        justifyContent: 'center'
     },
     enterInfo: {
         width: '50%',
@@ -35,11 +38,11 @@ const useStyles = makeStyles(theme => ({
     },
     makePayment: {
         display: 'flex',
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    card: {
-        margin: '100px 0px 0px 100px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '100px 0px 0px 50px',
+        height: 'fit-content',
+        padding: '20px'
     },
     cardTitle: {
         fontSize: 14,
@@ -56,21 +59,32 @@ const useStyles = makeStyles(theme => ({
         '& *': {
             color: 'black'
         },
-        '&>svg, & img': {
+        '& svg, & img': {
             marginRight: '5px',
             height: '25px'
         }
     }
 }))
 
-const BuyGig = () => {
+const BuyGig = ({ gigUID }) => {
     const classes = useStyles();
+
+    const [details, setDetails] = useState({
+        details: '',
+        richDetails: ''
+    })
+    const handleChange = e => {
+        setDetails({
+            details: e.getCurrentContent().getPlainText(),
+            richDetails: convertToRaw(e.getCurrentContent()),
+        })
+    }
 
     return (
         <div className={classes.root}>
             <div className={classes.enterInfo}>
                 <h1>Please enter information about your requirements</h1>
-                <RichTextEditor />
+                <RichTextEditor handleChange={handleChange} />
                 <div className={classes.alertInfo}>
                     <AnnouncementIcon className={classes.alert} />
                     <h3>Try to include the most amount of details possible to help
@@ -86,11 +100,13 @@ const BuyGig = () => {
                         <Typography variant="h5" component="h2">
                             Choose one of the options given below
                         </Typography>
-                        <Button variant="outlined" className={classes.paymentOptions}>
+                        <Button variant="outlined" className={classes.paymentOptions}
+                            onClick={() => buyGig(gigUID, details, 'bank')}>
                             <PaymentIcon />
                             Bank Transfer
                         </Button>
-                        <Button variant="outlined" className={classes.paymentOptions}>
+                        <Button variant="outlined" className={classes.paymentOptions}
+                            onClick={() => buyGig(gigUID, details, 'jazzcash')}>
                             <img src={JazzCash} alt='jazzcash' />
                             JazzCash
                         </Button>

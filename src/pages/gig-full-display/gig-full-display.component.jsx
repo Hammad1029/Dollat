@@ -1,6 +1,6 @@
 import './gig-full-display.styles.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { firestoreDB } from '../../firebase/firebase';
 
@@ -8,8 +8,10 @@ import { Avatar, Divider, Button } from '@material-ui/core';
 
 import BuyGig from '../../components/buy-gig/buy-gig.component';
 import CenterPopup from '../../components/center-popup/center-popup.component';
+import RichTextEditor from '../../components/rich-text-editor/rich-text-editor.component';
 
 const GigFullDisplay = () => {
+    console.log('render');
     const [buyGigShown, setBuyGigShown] = useState(false);
     const handleBuyGigShown = () => {
         setBuyGigShown(!buyGigShown);
@@ -17,10 +19,12 @@ const GigFullDisplay = () => {
     const [gigData, setGigData] = useState(null);
     const { gigUID } = useParams();
     const gigRef = firestoreDB.doc(`gigs/${gigUID}`);
-    gigRef.get().then(doc => {
-        if (doc.exists) setGigData(doc.data());
-        else setGigData(false);
-    })
+    useEffect(() => {
+        gigRef.get().then(doc => {
+            if (doc.exists) setGigData(doc.data());
+            else setGigData(false);
+        })
+    }, [])
 
     if (gigData === null) {
         return (
@@ -35,14 +39,11 @@ const GigFullDisplay = () => {
     } else if (gigData.gigUID === gigUID) {
         const {
             freelancer,
-            freelancerUid,
             freelancerAvatar,
-            timesGigDone,
-            gigRating,
-            freelancerRating,
             gigPostedDate,
             title,
             details,
+            richDetails,
             price,
             completionTime,
             gigImage
@@ -58,9 +59,7 @@ const GigFullDisplay = () => {
                     <Divider style={{ margin: '20px 0px' }} />
                     <div className='gig-display-banner'>
                         <img alt={title} src={gigImage} />
-                        <div>
-                            <p>{details}</p>
-                        </div>
+                        <RichTextEditor richDetails={richDetails} />
                     </div>
                 </div>
                 <div className='gig-buy'>
@@ -78,8 +77,8 @@ const GigFullDisplay = () => {
                             Buy Gig
                         </Button>
                     </div>
-                    <CenterPopup state={true} handleClose={() => handleBuyGigShown()}>
-                        <BuyGig />
+                    <CenterPopup state={buyGigShown} handleClose={() => handleBuyGigShown()}>
+                        <BuyGig gigUID={gigUID} />
                     </CenterPopup>
                 </div>
             </div>

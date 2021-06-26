@@ -24,9 +24,9 @@ export const signInWithGoogle = () => firebase.auth().signInWithPopup(provider)
     .catch(e => console.error(e));
 
 export const createUserDocument = async user => {
-    const userDocRef = firestoreDB.doc(`users/${user.uid}`);
-    const userDoc = await userDocRef.get();
-    if (userDoc.exists) return userDoc.data();
+    const docRef = firestoreDB.doc(`users/${user.uid}`);
+    const doc = await docRef.get();
+    if (doc.exists) return doc.data();
     else {
         const userData = {
             name: user.displayName,
@@ -38,8 +38,33 @@ export const createUserDocument = async user => {
             gigsCompleted: 0,
             gigsBought: 0
         };
-        userDocRef.set(userData).catch(e => console.error(e));
+        docRef.set(userData).catch(e => console.error(e));
         return userData;
     }
 }
 
+export const postGig = async (gigData, gigImageFile) => {
+    const { gigUID } = gigData;
+    const gigImageRef = firebaseStorage.child(`gig-files/${gigUID}/gigHeader`);
+    await gigImageRef.put(gigImageFile).catch(e => console.error(e));
+    const gigImageLink = await gigImageRef.getDownloadURL().catch(e => console.error(e));
+    const gigRef = firestoreDB.doc(`gigs/${gigUID}`);
+    const gigDataTemp = {
+        ...gigData,
+        gigImage: gigImageLink
+    }
+    await gigRef.set({ ...gigDataTemp }).catch(e => {
+        console.error(e);
+        return false;
+    });
+    return true;
+}
+
+export const buyGig = async (gigUID, details, method) => {
+    const docRef = firestoreDB.collection(`gigs/${gigUID}/gigInstances`);
+    docRef.add({
+        active: true,
+        paymentMethod: method,
+        details: { ...details },
+    });
+}
