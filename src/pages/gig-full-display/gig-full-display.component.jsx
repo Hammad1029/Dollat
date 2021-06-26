@@ -6,12 +6,18 @@ import { firestoreDB } from '../../firebase/firebase';
 
 import { Avatar, Divider, Button } from '@material-ui/core';
 
+import BuyGig from '../../components/buy-gig/buy-gig.component';
+import CenterPopup from '../../components/center-popup/center-popup.component';
+
 const GigFullDisplay = () => {
+    const [buyGigShown, setBuyGigShown] = useState(false);
+    const handleBuyGigShown = () => {
+        setBuyGigShown(!buyGigShown);
+    }
     const [gigData, setGigData] = useState(null);
     const { gigUID } = useParams();
     const gigRef = firestoreDB.doc(`gigs/${gigUID}`);
     gigRef.get().then(doc => {
-        console.log('fetching');
         if (doc.exists) setGigData(doc.data());
         else setGigData(false);
     })
@@ -68,10 +74,13 @@ const GigFullDisplay = () => {
                     </div>
                     <div className='buy-gig-call-to-action'>
                         <Button style={{ padding: '30px', fontSize: '20px' }}
-                            variant="contained" color="primary">
+                            variant="contained" color="primary" onClick={handleBuyGigShown}>
                             Buy Gig
-                    </Button>
+                        </Button>
                     </div>
+                    <CenterPopup state={true} handleClose={() => handleBuyGigShown()}>
+                        <BuyGig />
+                    </CenterPopup>
                 </div>
             </div>
         )

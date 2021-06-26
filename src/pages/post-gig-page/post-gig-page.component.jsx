@@ -3,6 +3,7 @@ import './post-gig-page.styles.css';
 import GigCard from '../../components/gig-card/gig-card.component';
 import CenterPopup from '../../components/center-popup/center-popup.component';
 import GigFullDisplayPreview from '../../components/gig-full-display-preview/gig-full-display-preview.component';
+import RichTextEditor from '../../components/rich-text-editor/rich-text-editor.component';
 
 import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
@@ -10,17 +11,30 @@ import clsx from 'clsx';
 import { v4 as uuid } from 'uuid';
 import { firestoreDB, firebaseStorage } from '../../firebase/firebase';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Button, IconButton } from '@material-ui/core';
+import { TextField, Button, IconButton, Select, MenuItem } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core/styles';
+
+import { convertToRaw } from 'draft-js';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
         '& > *': {
             marginBottom: '20px',
-            width: '50ch',
+            width: '50ch'
         },
     },
+    completionTime: {
+        width: 'fit-content'
+    },
+    select: {
+        padding: '10px',
+        width: '8ch'
+    }
 }));
 
 const PostGigPage = () => {
@@ -42,8 +56,9 @@ const PostGigPage = () => {
         gigPostedDate: (new Date()).toDateString(),
         title: '',
         details: '',
+        richDetails: '',
         price: '',
-        completionTime: 0,
+        completionTime: 1,
         gigImage: 'image1.png'
     });
 
@@ -51,6 +66,14 @@ const PostGigPage = () => {
         setGigData(prevData => ({
             ...prevData,
             [name]: value
+        }))
+    }
+
+    const handleRichTextChange = e => {
+        setGigData(prevData => ({
+            ...prevData,
+            richDetails: convertToRaw(e.getCurrentContent()),
+            details: e.getCurrentContent().getPlainText()
         }))
     }
 
@@ -91,14 +114,18 @@ const PostGigPage = () => {
         <div className='post-gig-page'>
             <form className={clsx(classes.root, 'add-gig-info')} onSubmit={handleSubmit}>
                 <TextField variant='filled' onChange={handleChange} name='title' label='Title' />
-                <TextField variant='filled' onChange={handleChange} name='details' label='Details'
-                    multiline rows={6} />
+                <RichTextEditor handleChange={handleRichTextChange} />
                 <TextField variant='filled' onChange={handleChange} name='price' label='Price' />
-                <h3>Completion Time</h3>
-                <div className='post-gig-completion-time'>
-                    <TextField style={{ width: '10ch' }} variant='outlined' onChange={handleChange}
-                        name='completionTime' label='Days' />
-                    <h2>Days</h2>
+                <div className={clsx(classes.completionTime, 'post-gig-completion-time')}>
+                    <h2>Completion time in days:</h2>
+                    <Select
+                        labelId="demo-simple-select-helper-label"
+                        name='completionTime'
+                        value={gigData.completionTime}
+                        onChange={handleChange}
+                        className={classes.select}>
+                        {[...Array(30)].map((x, idx) => <MenuItem key={idx} value={idx + 1}>{idx + 1}</MenuItem>)}
+                    </Select>
                 </div>
                 <div className='post-gig-add-image'>
                     <h3>Add an image to represent your gig</h3>

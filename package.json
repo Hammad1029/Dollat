@@ -12,6 +12,7 @@
     "clsx": "^1.1.1",
     "firebase": "^8.6.2",
     "material-ui-nested-menu-item": "^1.0.2",
+    "mui-rte": "^1.29.0",
     "react": "^17.0.2",
     "react-component-time-input": "^0.9.2",
     "react-dom": "^17.0.2",

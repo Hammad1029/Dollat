@@ -13,8 +13,8 @@ import TestingPage from './pages/testing-page/testing-page.component';
 import SignUp from './components/sign-up/sign-up.component';
 import PostGigPage from './pages/post-gig-page/post-gig-page.component';
 import ViewGigsPage from './pages/view-gigs-page/view-gigs-page.component';
+import GigFullDisplay from './pages/gig-full-display/gig-full-display.component';
 import CenterPopup from './components/center-popup/center-popup.component';
-import GigFullDisplay from './components/gig-full-display/gig-full-display.component';
 
 const theme = createMuiTheme({
     palette: {
@@ -26,11 +26,12 @@ const theme = createMuiTheme({
     }
 });
 
-
 const App = () => {
     const dispatch = useDispatch();
     const showSignInPopup = useSelector(state => state.appSettingsReducer.signInPopup);
     const showSignUpPopup = useSelector(state => state.appSettingsReducer.signUpPopup);
+    const signedIn = useSelector(state => state.userReducer.currentUser.uid);
+    useEffect(() => {if (!signedIn) dispatch({ type: 'TOGGLE_SIGNUP_POPUP' })}, [])
 
     useEffect(() => {
         authRef.onAuthStateChanged(async user => {
@@ -42,7 +43,7 @@ const App = () => {
                         photoURL: user.photoURL
                     }
                 });
-            } else dispatch({ type: 'SET_CURRENT_USER', payload: null });
+            } else dispatch({ type: 'SET_CURRENT_USER', payload: { uid: null } });
         })
     }, [])
 
@@ -50,7 +51,13 @@ const App = () => {
         return (
             <Switch>
                 <Route path='/PostGig'>
-                    <PostGigPage />
+                    {
+                        signedIn ? <PostGigPage />
+                            : <CenterPopup state={showSignInPopup}
+                                handleClose={() => dispatch({ type: 'TOGGLE_SIGNIN_POPUP' })}>
+                                <SignIn />
+                            </CenterPopup>
+                    }
                 </Route>
                 <Route path='/ViewGigs'>
                     <ViewGigsPage />

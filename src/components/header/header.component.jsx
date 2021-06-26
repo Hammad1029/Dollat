@@ -54,15 +54,22 @@ const Header = ({ homepage }) => {
                         <MenuItem onClick={closeMenu}>--- Other</MenuItem>
                         <MenuItem onClick={closeMenu}>Other</MenuItem>
                     </Menu>
-                    <NavLink to='Testing' activeClassName='active-page'>
+                    <NavLink to='/Testing' activeClassName='active-page'>
                         Testing Page
                     </NavLink>
-                    <NavLink to='ViewGigs' activeClassName='active-page'>
+                    <NavLink to='/ViewGigs' activeClassName='active-page'>
                         View Gigs
                     </NavLink>
-                    <NavLink to='PostGig' activeClassName='active-page'>
-                        Post Gig
-                    </NavLink>
+                    {
+                        signedIn
+                            ? <NavLink to='/PostGig' activeClassName='active-page'>
+                                Post Gig
+                            </NavLink>
+                            : <div onClick={() => dispatch({ type: 'TOGGLE_SIGNUP_POPUP' })}>
+                                Post Gig
+                            </div>
+                    }
+
                     {
                         signedIn
                             ? <AvatarPopup />
